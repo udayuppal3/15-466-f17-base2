@@ -1,29 +1,24 @@
 NOTE: please fill in the first section with information about your game.
 
-# *Game Title*
+# *Tree Pop*
 
-*Game Title* is *Your Name*'s implementation of [*Design Document*](http://graphics.cs.cmu.edu/courses/15-466-f17/game2-designs/put-real-link-here) for game2 in 15-466-f17.
+*Tree Pop* is *Uday Uppal*'s implementation of [*Spider Pop*](http://graphics.cs.cmu.edu/courses/15-466-f17/game2-designs/bebert/) for game2 in 15-466-f17.
 
-*Include a Screenshot Here*
-
-## Build Notes
-
-*Include any special notes or steps required to build your game here. If there are no special notes, delete this section.*
+![Image](screenshots/screenshot.png?raw=true "Image")
 
 ## Asset Pipeline
 
-*Briefly describe the asset pipeline for this game. What sorts of source files are used? How are they processed? How are they loaded?*
+The asset pipeline consists of a blender file called spiders.blend and an export-meshes.py script used to export information from the blender file into usable scene objects. These objects can then be created and controlled through their transformations in game.
 
 ## Architecture
 
-*Provide a brief introduction to how you implemented the design. Talk about the basic structure of your code.*
+The architecture follows largely the original base2 implementation. Instead of spawing in objects from the blender hierarchy directly, I create object types based on their meshes and save references to them. Then I can easily manipulate them through their transformations from within the game loop. 
 
 ## Reflection
 
-*Reflect on the assignment. What was difficult? What worked well? If you were doing it again, what would you change?*
+I had never before worked with blender, and learning how to work and script with it was difficult. Since the project was very short, I did not have enough time to learn how to use blender properly, and needed to base my work largely on the functionality offered by the base code. I used the tree and rock models since it was difficult to create spiders as I needed to as per the game design. If I were doing the project again, I would have tried to plan more time for it since this week was too busy and I could devote as much time to learning how to use blender as I would have liked in order to use it as effectively as possible.
 
-*Reflect on the design document. What was clear and what was ambiguous? How did you resolve the ambiguities?*
-
+The design document was very open-ended and left a lot up for interpretation. It made it clear what the objective of the game was, but did not clarify how lives were counted and what it meant to "miss" the food. I resolved this by deciding that food would show up at random, and if the player clicks the wrong key then it would count as a miss. The game would end once the player has tried to jump the wrong tree 3 times.
 
 # About Base2
 

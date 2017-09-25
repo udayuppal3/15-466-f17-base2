@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
 		glm::uvec2 size = glm::uvec2(640, 480);
 	} config;
 
-	//------------  initialization ------------
+	//------------	initialization ------------
 
 	//Initialize SDL library:
 	SDL_Init(SDL_INIT_VIDEO);
@@ -210,15 +210,15 @@ int main(int argc, char **argv) {
 	tree_stack.emplace_back( &add_object("Tree", glm::vec3(1.0f, 0.5f, 0.0f), glm::quat(0.0f, 0.0f, 0.0f, 1.0f), glm::vec3(0.3f)) );
 	tree_stack.emplace_back( &add_object("Tree", glm::vec3(1.0f, 1.5f, 0.0f), glm::quat(0.0f, 0.0f, 0.0f, 1.0f), glm::vec3(0.3f)) );
 
-  srand((unsigned)time(0));
-  int rock_spot = rand() % 4;
-  int lives = 3;
+	srand((unsigned)time(0));
+	int rock_spot = rand() % 4;
+	int lives = 3;
 
-  Scene::Object *rock = &add_object("Rock", glm::vec3(1.0f,(float)rock_spot - 1.5f, 2.0f), glm::quat(0.0f, 0.3f, 0.05f, 1.0f), glm::vec3(0.3f));
+	Scene::Object *rock = &add_object("Rock", glm::vec3(1.0f,(float)rock_spot - 1.5f, 2.0f), glm::quat(0.0f, 0.3f, 0.05f, 1.0f), glm::vec3(0.3f));
 
-  std::vector< bool > tree_jumps(tree_stack.size(), false);
+	std::vector< bool > tree_jumps(tree_stack.size(), false);
 	std::vector< float > tree_speed(tree_stack.size(), 0.0f);
-  float tree_acceleration = -10.0f;
+	float tree_acceleration = -10.0f;
 
 	glm::vec2 mouse = glm::vec2(0.0f, 0.0f); //mouse position in [-1,1]x[-1,1] coordinates
 
@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
 	//------------ game loop ------------
 
 	bool should_quit = false;
-  bool game_over = false;
+	bool game_over = false;
 	while (true) {
 		static SDL_Event evt;
 		while (SDL_PollEvent(&evt) == 1) {
@@ -248,58 +248,58 @@ int main(int argc, char **argv) {
 			} else if (evt.type == SDL_KEYDOWN && evt.key.keysym.sym == SDLK_ESCAPE) {
 				should_quit = true;
 			} else if (evt.type == SDL_KEYDOWN) {
-        if (!game_over) {
-          switch (evt.key.keysym.sym) {
-            case SDLK_SEMICOLON:
-              if (!tree_jumps[3]) {
-                tree_jumps[3] = true;
-                tree_speed[3] = 5.0f;
-                if (rock_spot != 3) {
-                  lives--;
-                }
-              }
-              break;
-            case SDLK_j:
-              if (!tree_jumps[2]) {
-                tree_jumps[2] = true;
-                tree_speed[2] = 5.0f;
-              }
-                if (rock_spot != 2) {
-                  lives--;
-                }
-              break;
-            case SDLK_f:
-              if (!tree_jumps[1]) {
-                tree_jumps[1] = true;
-                tree_speed[1] = 5.0f;
-              }
-                if (rock_spot != 1) {
-                  lives--;
-                }
-              break;
-            case SDLK_a:
-              if (!tree_jumps[0]) {
-                tree_jumps[0] = true;
-                tree_speed[0] = 5.0f;
-              }
-                if (rock_spot != 0) {
-                  lives--;
-                }
-              break;
-          }
-        } 
-      } else if (evt.type == SDL_QUIT) {
+				if (!game_over) {
+					switch (evt.key.keysym.sym) {
+						case SDLK_SEMICOLON:
+							if (!tree_jumps[3]) {
+								tree_jumps[3] = true;
+								tree_speed[3] = 5.0f;
+								if (rock_spot != 3) {
+									lives--;
+								}
+							}
+							break;
+						case SDLK_j:
+							if (!tree_jumps[2]) {
+								tree_jumps[2] = true;
+								tree_speed[2] = 5.0f;
+							}
+								if (rock_spot != 2) {
+									lives--;
+								}
+							break;
+						case SDLK_f:
+							if (!tree_jumps[1]) {
+								tree_jumps[1] = true;
+								tree_speed[1] = 5.0f;
+							}
+								if (rock_spot != 1) {
+									lives--;
+								}
+							break;
+						case SDLK_a:
+							if (!tree_jumps[0]) {
+								tree_jumps[0] = true;
+								tree_speed[0] = 5.0f;
+							}
+								if (rock_spot != 0) {
+									lives--;
+								}
+							break;
+					}
+				} 
+			} else if (evt.type == SDL_QUIT) {
 				should_quit = true;
 				break;
 			}
 		}
 		if (should_quit) break;
 
-    if (lives == 0) {
-      game_over = true;
-    }
-    
-    if (game_over) continue;
+		if (lives == 0) {
+			game_over = true;
+		}
+		
+		if (game_over) continue;
 
 		auto current_time = std::chrono::high_resolution_clock::now();
 		static auto previous_time = current_time;
@@ -310,34 +310,34 @@ int main(int argc, char **argv) {
 			//tree stack:
 			for (uint32_t i = 0; i < tree_stack.size(); ++i) {
 				if (tree_jumps[i]) {
-          tree_speed[i] += tree_acceleration * elapsed;
-          tree_stack[i]->transform.position.z += tree_speed[i] * elapsed;
-          if (rock_spot == i && tree_stack[i]->transform.position.z > 1.2f) {
-            int next_spot = rand() % 3;
-            if (i == 0) {
-              rock_spot = next_spot + 1;
-            } else if (i == 1) {
-              if (next_spot == 0) {
-                rock_spot = 0;
-              } else {
-                rock_spot = next_spot + 1;
-              }
-            } else if (i == 2) {
-              if (next_spot == 2) {
-                rock_spot = 3;
-              } else {
-                rock_spot = next_spot;
-              }
-            } else if (i == 3) {
-              rock_spot = next_spot;
-            }
-          }
-          rock->transform.position.y = (float)rock_spot - 1.5f;
-          if (tree_stack[i]->transform.position.z < 0.0f) {
-            tree_stack[i]->transform.position.z = 0.0f;
-            tree_jumps[i] = false;
-          }
-        } 
+					tree_speed[i] += tree_acceleration * elapsed;
+					tree_stack[i]->transform.position.z += tree_speed[i] * elapsed;
+					if (rock_spot == i && tree_stack[i]->transform.position.z > 1.2f) {
+						int next_spot = rand() % 3;
+						if (i == 0) {
+							rock_spot = next_spot + 1;
+						} else if (i == 1) {
+							if (next_spot == 0) {
+								rock_spot = 0;
+							} else {
+								rock_spot = next_spot + 1;
+							}
+						} else if (i == 2) {
+							if (next_spot == 2) {
+								rock_spot = 3;
+							} else {
+								rock_spot = next_spot;
+							}
+						} else if (i == 3) {
+							rock_spot = next_spot;
+						}
+					}
+					rock->transform.position.y = (float)rock_spot - 1.5f;
+					if (tree_stack[i]->transform.position.z < 0.0f) {
+						tree_stack[i]->transform.position.z = 0.0f;
+						tree_jumps[i] = false;
+					}
+				} 
 			}
 
 			//camera:
@@ -376,7 +376,7 @@ int main(int argc, char **argv) {
 	}
 
 
-	//------------  teardown ------------
+	//------------	teardown ------------
 
 	SDL_GL_DeleteContext(context);
 	context = 0;
